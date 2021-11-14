@@ -102,70 +102,70 @@ ostream &operator<<( ostream &output, const Poly &p ) {
     Somma due polinomi di grado qualsiasi
 \*-----------------------------------------------------------------------------------*/
 Poly Poly::operator+( const Poly& p ) {
-	int     max, min;
-	bool    p_has_max;
+    int     max, min;
+    bool    p_has_max;
 
-	if ( deg > p.deg ) {
-		p_has_max   = false;
-		max		    = deg;
-		min		    =  p.deg;
-	} else {
-		p_has_max	= true;
-		max		    = p.deg;
-		min		    = deg;
-	}
-	Poly sum( max );    // nuovo polinomio contenente la somma
+    if ( deg > p.deg ) {
+        p_has_max   = false;
+        max		    = deg;
+        min		    =  p.deg;
+    } else {
+        p_has_max	= true;
+        max		    = p.deg;
+        min		    = deg;
+    }
+    Poly sum( max );    // nuovo polinomio contenente la somma
 
     // somma i coefficieti fino al grado comune ad entrambi i polinomi
-	for( int i=0; i<min; i++ ) {
-		sum.v[ i ]	= v[ i ] + p.v[ i ];
-	}
+    for( int i=0; i<min; i++ ) {
+        sum.v[ i ]	= v[ i ] + p.v[ i ];
+    }
 
     // per i gradi successivi controlla ogni volta
-	for( int i=min; i<max; i++ ) {
-		if ( p_has_max ) {
-			sum.v[ i ]	= p.v[ i ];
-		} else {
-			sum.v[ i ]	= v[ i ];
-		}
-	}
-	return sum;
+    for( int i=min; i<max; i++ ) {
+        if ( p_has_max ) {
+            sum.v[ i ]	= p.v[ i ];
+        } else {
+            sum.v[ i ]	= v[ i ];
+        }
+    }
+    return sum;
 }
 
 /*-----------------------------------------------------------------------------------*\
     Calcola il prodotto di due polinomi di grado qualsiasi
 \*-----------------------------------------------------------------------------------*/
 Poly Poly::operator*( const Poly& p ) {
-	Poly prd( deg + p.deg - 1 );        // nuovo polinomio contenente il risultato
+    Poly prd( deg + p.deg - 1 );        // nuovo polinomio contenente il risultato
 
-	for( int i=0; i<deg; i++ ) {
+    for( int i=0; i<deg; i++ ) {
         for( int j=0; j<p.deg; j++ ) {
             prd.v[ i+j ]   += v[ i ] * p.v[ j ];
         }
-	}
-	return prd;
+    }
+    return prd;
 }
 
 /*-----------------------------------------------------------------------------------*\
     Calcola la derivata del polinomio
 \*-----------------------------------------------------------------------------------*/
 Poly Poly::derivative() {
-	Poly der( deg - 1 );        // nuovo polinomio contenente il risultato
+    Poly der( deg - 1 );        // nuovo polinomio contenente il risultato
 
-	for( int i=1; i<deg; i++ ) {
-		der.v[ i-1 ]	= i * v[ i ];
-	}
-	return der;
+    for( int i=1; i<deg; i++ ) {
+        der.v[ i-1 ]	= i * v[ i ];
+    }
+    return der;
 }
 
 /*-----------------------------------------------------------------------------------*\
     Calcola l'integrale del polinomio
 \*-----------------------------------------------------------------------------------*/
 Poly Poly::integral() {
-	Poly der( deg + 1 );        // nuovo polinomio contenente il risultato
+    Poly der( deg + 1 );        // nuovo polinomio contenente il risultato
 
-	for( int i=0; i<deg; i++ ) {
-		der.v[ i+1 ]	= v[ i ] / ( i+1 );
-	}
-	return der;
+    for( int i=0; i<deg; i++ ) {
+        der.v[ i+1 ]	= v[ i ] / ( i+1 );
+    }
+    return der;
 }
