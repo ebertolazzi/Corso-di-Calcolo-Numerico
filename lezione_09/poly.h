@@ -10,8 +10,8 @@
 
 class Poly : public Eigen::VectorXd {
     private:
-        Eigen::VectorXd     v;              // vettore dei coefficienti
-        int		            deg;            // grado del polinomio
+        Eigen::VectorXd     coef;           // vettore dei coefficienti
+        int		            degr;           // grado del polinomio
                                             // (o meglio, la lunghezza del vettore v)
 
     public:
@@ -20,8 +20,8 @@ class Poly : public Eigen::VectorXd {
         Poly( const Eigen::VectorXd );
 
         // funzioni di supporto
-        Eigen::VectorXd get_coef() { return v; }
-        int get_deg() { return deg-1; }
+        Eigen::VectorXd get_coef() { return coef; }
+        int get_degr() { return degr-1; }
 
         // stampa il polinomio
         friend std::ostream &operator<<( std::ostream&, const Poly& );
