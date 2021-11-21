@@ -15,8 +15,7 @@ using namespace std;
 #define         N_POINTS    100
 #define         ANIM        0           // genera plot 1=animato o 0=statico
 
-static int	    n_iter      = 0;        // counter per il numero di iterazioni eseguite
-
+int	            n_iter      = 0;        // counter per il numero di iterazioni eseguite
 const string    head        = "# --------------------------\n# data generated for gnuplot\n# --------------------------\n";
 const string	fname       = ANIM ? "plot_anim.txt" : "plot_data.txt";
 
@@ -94,7 +93,7 @@ float do_adapt( float a, float b, float ( *f )( float x ), float e ) {
     o << head;                  // scrive la header
     o.precision( PREC );        // imposta la precisione
 
-    // scrive prima i dati della funzione da interploare
+    // scrive prima i dati della funzione da integrare
     for( float x=a; x<b; ){
         o << x << "\t" << f( x ) << endl;
         x	+= dx;
