@@ -1,7 +1,7 @@
 /* --------------------------------------------------------------------------------- *\
     CALCOLO NUMERICO E PROGRAMMAZIONE C++ (AA 2021/22)                  Alice Plebe
 
-    Classe per rappresentare un poligono
+    Classe per rappresentare un polinomio
 \* --------------------------------------------------------------------------------- */
 
 #include "cnum.h"
@@ -27,17 +27,23 @@ main() {
     << '\n';
 
   cout << "p1    = " << p1 << '\n';
+  cout << "p1(2) = " << p1.eval( 2 ) << "\n\n";
   cout << "p2    = " << p2 << '\n';
-  cout << "p2(3) = " << p2.eval( 3 ) << '\n';
+  cout << "p2(3) = " << p2.eval( 3 ) << "\n\n";
 
-  cout << "derivata di p1 = " << p1.derivative() << '\n';
-  cout << "integrale di p1 = " << p1.integral() << '\n';
+  cout << "derivata di p1 = " << p1.derivative() << "\n\n";
+  cout << "integrale di p1 = " << p1.integral() << "\n\n";
 
   p3  = p1 + p2;
-  cout << "somma di p1 e p2 = " << p3 << '\n';
+  cout << "somma di p1 e p2 = " << p3 << "\n\n";
 
   p3  = p1 * p2;
-  cout << "prodotto di p1 e p2 = " << p3 << '\n';
+  cout << "prodotto di p1 e p2 = " << p3 << "\n\n";
+
+  cout << "prodotto di\np3 = " << p3 << "\ncon\np1 = " << p1 << '\n';
+  cout << "p3 * p1 => " << p3*p1 << "\n\n";
+  p3 *= p1;
+  cout << "p3 *= p1 => " << p3 << "\n\n";
 
   return 0;
 }

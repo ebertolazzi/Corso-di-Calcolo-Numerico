@@ -62,7 +62,7 @@ FOREACH (F ${S})
 ENDFOREACH (F ${S})
 FILE( GLOB S ./src/*.h)
 
-include_directories( include /usr/local/include/eigen3 )
+include_directories( include eigen3 )
 
 SET( CMAKE_INSTALL_PREFIX ${CMAKE_CURRENT_SOURCE_DIR}/lib )
 
@@ -91,8 +91,12 @@ SET_PROPERTY( TARGET ${TARGETS} PROPERTY POSITION_INDEPENDENT_CODE ON )
 INSTALL( FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include )
 
 SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
-ADD_EXECUTABLE( test_poly tests/test_poly.cpp ${HEADERS} )
-TARGET_LINK_LIBRARIES( test_poly ${TARGETS} )
+
+SET( EXE_LIST test_poly test_Lagrange test_zeroes )
+FOREACH (EXE ${EXE_LIST})
+  ADD_EXECUTABLE( ${EXE} tests/${EXE}.cpp ${HEADERS} )
+  TARGET_LINK_LIBRARIES( ${EXE} ${TARGETS} )
+ENDFOREACH()
 
 MESSAGE( STATUS "C compiler                  = ${CMAKE_C_COMPILER_ID} ${CMAKE_C_COMPILER}" )
 MESSAGE( STATUS "C++ compiler                = ${CMAKE_CXX_COMPILER_ID} ${CMAKE_CXX_COMPILER}" )
