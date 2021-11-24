@@ -92,7 +92,7 @@ INSTALL( FILES ${HEADERS} DESTINATION ${CMAKE_INSTALL_PREFIX}/include )
 
 SET(EXECUTABLE_OUTPUT_PATH ${CMAKE_CURRENT_SOURCE_DIR}/bin)
 
-SET( EXE_LIST test_poly test_Lagrange test_zeroes )
+SET( EXE_LIST test_poly test_Lagrange test_zeroes test_zeroes2 test_zeroes3 )
 FOREACH (EXE ${EXE_LIST})
   ADD_EXECUTABLE( ${EXE} tests/${EXE}.cpp ${HEADERS} )
   TARGET_LINK_LIBRARIES( ${EXE} ${TARGETS} )

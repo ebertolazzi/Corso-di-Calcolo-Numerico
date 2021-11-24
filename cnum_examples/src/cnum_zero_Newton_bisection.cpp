@@ -3,55 +3,64 @@
 \* --------------------------------------------------------------------------------- */
 
 #include "cnum.h"
-#include <cmath>
 #include <vector>
 
 using namespace std;
 
 namespace cnum {
 
-  using std::abs;
   using std::vector;
 
   Real
-  zero_Halley(
+  zero_Newton_bisection(
     PFUN      fun,
     PFUN      Dfun,
-    PFUN      DDfun,
-    Real      x0,
+    Real      a,
+    Real      b,
     Real      tol,
     Integer   max_iter,
     Integer & flg,
     dvec_t  * x_history
-  ) {
+ ) {
     bool keep_trace = x_history != nullptr;
     Integer npts = 0;
     vector<Real> xh;
     xh.reserve(100);
-    // -------------
-    Real f0 = fun(x0);
-    flg = -1; // NOT OK
+    // ------------------------
+    Real fa = fun(a);
+    Real fb = fun(b);
+    // controlla consistenza dati del problema
+    if ( a >= b )      { flg = -1; return 0; }
+    if ( fa * fb > 0 ) { flg = -2; return 0; }
+    flg = -1; // NO OK
+    Real x, fx;
     for ( Integer i = 0; i < max_iter; ++i ) {
-      if ( keep_trace ) { xh.push_back(x0); ++npts; }
-      Real Df0  = Dfun(x0);
-      Real DDf0 = DDfun(x0);
-      Real x1   = x0 - (f0*Df0)/(Df0*Df0-0.5*f0*DDf0);
-      Real f1   = fun(x1);
-      if ( abs(f1) < tol || abs(x0-x1) < tol ) {
+      if ( keep_trace ) { xh.push_back(x); ++npts; }
+      if ( abs(fa) < abs(fb) ) x = a - fa/Dfun(a);
+      else                     x = b - fb/Dfun(b);
+      // Se Newton fattito uso bisezione
+      if ( x <= a || x >= b ) x = (a+b)/2;
+      fx = fun(x);
+      if ( fa*fx < 0 ) {
+        // intervallo [a,x]
+        b  = x;
+        fb = fx;
+      } else if ( fb*fx <= 0 ) {
+        // intervallo [c,b]
+        a  = x;
+        fa = fx;
+      }
+      if ( abs(fx) < tol ) {
         flg = 0;
-        x0  = x1;
-        xh.push_back(x0); ++npts;
+        xh.push_back(x); ++npts;
         break;
       }
-      // shift
-      x0 = x1;
-      f0 = f1;
     }
     // terminate le iterate, ritorna la soluzione
     if ( keep_trace ) {
       x_history->resize(npts);
       std::copy_n( xh.begin(), npts, x_history->data() );
     }
-    return x0;
+    return x;
   }
 }

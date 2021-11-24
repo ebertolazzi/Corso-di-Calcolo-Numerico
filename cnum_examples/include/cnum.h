@@ -103,7 +103,7 @@ namespace cnum {
     Real      x0,
     Real      x1,
     Real      tol,
-    Integer   max_it,
+    Integer   max_iter,
     Integer & flg,
     dvec_t  * x_history = nullptr
   );
@@ -114,7 +114,7 @@ namespace cnum {
     PFUN      Dfun,
     Real      x0,
     Real      tol,
-    Integer   max_it,
+    Integer   max_iter,
     Integer & flg,
     dvec_t  * x_history = nullptr
   );
@@ -126,7 +126,7 @@ namespace cnum {
     PFUN      DDfun,
     Real      x0,
     Real      tol,
-    Integer   max_it,
+    Integer   max_iter,
     Integer & flg,
     dvec_t  * x_history = nullptr
   );
@@ -138,9 +138,31 @@ namespace cnum {
     PFUN      DDfun,
     Real      x0,
     Real      tol,
-    Integer   max_it,
+    Integer   max_iter,
     Integer & flg,
     dvec_t  * x_history = nullptr
+  );
+
+  Real
+  zero_Steffensen(
+    PFUN      fun,
+    Real      x0,
+    Real      tol,
+    Integer   max_iter,
+    Integer & flg,
+    dvec_t  * x_history = nullptr
+  );
+
+  Real
+  zero_Newton_bisection(
+    PFUN      fun,
+    PFUN      Dfun,
+    Real      a,
+    Real      b,
+    Real      tol,
+    Integer   max_iter,
+    Integer & flg,
+    dvec_t  * x_history
   );
 }
 

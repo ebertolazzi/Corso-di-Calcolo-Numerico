@@ -14,13 +14,11 @@ namespace cnum {
   using std::vector;
 
   Real
-  zero_Halley(
+  zero_Steffensen(
     PFUN      fun,
-    PFUN      Dfun,
-    PFUN      DDfun,
     Real      x0,
     Real      tol,
-    Integer   max_iter,
+    Integer   max_it,
     Integer & flg,
     dvec_t  * x_history
   ) {
@@ -30,13 +28,12 @@ namespace cnum {
     xh.reserve(100);
     // -------------
     Real f0 = fun(x0);
-    flg = -1; // NOT OK
-    for ( Integer i = 0; i < max_iter; ++i ) {
+    flg = -1; // NO OK
+    for ( Integer i = 0; i < max_it; ++i ) {
       if ( keep_trace ) { xh.push_back(x0); ++npts; }
-      Real Df0  = Dfun(x0);
-      Real DDf0 = DDfun(x0);
-      Real x1   = x0 - (f0*Df0)/(Df0*Df0-0.5*f0*DDf0);
-      Real f1   = fun(x1);
+      Real ff  = fun(x0+f0);
+      Real x1  = x0 - (f0*f0)/(ff-f0);
+      Real f1  = fun(x1);
       if ( abs(f1) < tol || abs(x0-x1) < tol ) {
         flg = 0;
         x0  = x1;
